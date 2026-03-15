@@ -6,14 +6,22 @@ import redis.clients.jedis.JedisPooled;
 public final class HuTiersMessenger extends JavaPlugin {
 
     public static JedisPooled jedis;
+    public static String host;
+    public static int port;
+    public static String user;
+    public static String password;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         getConfig().options().copyDefaults(true);
         saveConfig();
+        host = getConfig().getString("host");
+        port = getConfig().getInt("port");
+        user = getConfig().getString("user");
+        password = getConfig().getString("password");
         try {
-            jedis = new JedisPooled(getConfig().getString("host"), getConfig().getInt("port"), getConfig().getString("user"), getConfig().getString("password"));
+            jedis = new JedisPooled(host, port, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
